@@ -16,13 +16,13 @@ class CreateProductService {
   constructor(
     @inject('ProductsRepository')
     private productsRepository: IProductsRepository,
-  ) { }
+  ) {}
 
   public async execute({ name, price, quantity }: IRequest): Promise<Product> {
-    const productsExists = await this.productsRepository.findByName(name);
+    const productExists = await this.productsRepository.findByName(name);
 
-    if (productsExists) {
-      throw new AppError('There is already one product with this name');
+    if (productExists) {
+      throw new AppError('This product already exists');
     }
 
     const product = await this.productsRepository.create({
